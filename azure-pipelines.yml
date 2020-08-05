@@ -11,6 +11,7 @@ pool:
 
 steps:
 - task: NodeTool@0
+
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
@@ -20,3 +21,17 @@ steps:
     npm install -g gulp-cli gulp
     gulp build
   displayName: 'npm install and build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
