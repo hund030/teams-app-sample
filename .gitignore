@@ -5,7 +5,6 @@ node_modules
 package
 
 # do not include the local environment files
-.env
 .vscode
 
 # do not include the Connectors Json Db file
